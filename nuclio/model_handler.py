@@ -51,6 +51,13 @@ class ModelHandler:
 
             for contour in contours:
                 contour = np.flip(contour, axis=1)
+                
+                #delete small polygons
+                if contour[:,0].max() - contour[:,0].min() < 30: #50
+                    continue
+                if contour[:,1].max() - contour[:,1].min() < 50: #90
+                    continue 
+		
                 contour = approximate_polygon(contour, tolerance=2.5)
                 if len(contour) < 3:
                     continue
